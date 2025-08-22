@@ -69,7 +69,7 @@
         },
         "symfony": {
             "allow-contrib": true,
-            "endpoint": "https://github.com/heyho1337/recipes/main"
+            "endpoint": "https://raw.githubusercontent.com/heyho1337/recipes/master/main"
         }
     }
 }
