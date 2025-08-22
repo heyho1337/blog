@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <main class="article subContainer">
+        <section class="title subHeader">
+            <svg width="1920" height="299" viewBox="0 0 1920 299" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect opacity="0.24" x="1920" y="299" width="1920" height="299" transform="rotate(-180 1920 299)" fill="url(#paint0_linear_78_1003)"/>
+                <defs>
+                <linearGradient id="paint0_linear_78_1003" x1="1920" y1="598" x2="2052.29" y2="67.7858" gradientUnits="userSpaceOnUse">
+                <stop offset="0.151432" stop-color="#C97B2D"/>
+                <stop offset="0.614902" stop-color="#2D372E"/>
+                </linearGradient>
+                </defs>
+            </svg>
+            <div class="gridCont">
+                <h1>{{ title }}</h1>
+            </div>
+        </section>
+
+        <article class="{{ fajlnev }}">
+            {{ content|raw }}
+        </article>
+
+        <section class="offer">
+            <div class="gridCont">
+                {{ ajanlat|raw }}
+            </div>
+            <svg width="946" height="585" viewBox="0 0 946 585" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect opacity="0.24" width="946" height="585" transform="matrix(-1 0 0 1 946 0)" fill="url(#paint0_linear_67_798)"/>
+                <defs>
+                <linearGradient id="paint0_linear_67_798" x1="3.50116e-05" y1="585" x2="550.954" y2="28.917" gradientUnits="userSpaceOnUse">
+                <stop offset="0.151432" stop-color="#C97B2D"/>
+                <stop offset="0.614902" stop-color="#283029"/>
+                </linearGradient>
+                </defs>
+            </svg>
+        </section>
+    </main>
+{% endblock %}

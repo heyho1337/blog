@@ -1,0 +1,25 @@
+{
+    "name": "heyhodesigns/blog",
+    "description": "A package for blog",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "heyhodesigns",
+            "email": "heyho1337@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "ShdBlog\\": "src/"
+        }
+    },
+    "require": {
+        "php": ">=8.1"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-main": "1.0.x-dev"
+        }
+    }
+}
