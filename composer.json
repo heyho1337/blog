@@ -69,7 +69,10 @@
         },
         "symfony": {
             "allow-contrib": true,
-            "endpoint": "https://raw.githubusercontent.com/heyho1337/recipes/master/main"
+            "endpoint": [
+                "https://api.github.com/repos/heyho1337/recipes/contents/index.json",
+                "flex://defaults"
+            ]
         }
     }
 }
