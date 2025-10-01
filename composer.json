@@ -17,5 +17,13 @@
     "require": {
         "php": "^8.2",
         "symfony/framework-bundle": "^7.0"
+    },
+    "extra": {
+        "symfony": {
+            "endpoint": [
+                "flex://defaults",
+                "https://github.com/heyho1337/blog-recipe"
+            ]
+        }
     }
 }
