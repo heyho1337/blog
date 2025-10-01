@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <main class="blogContainer subContainer">
+        <section class="blogHeader subHeader">
+            <svg width="1920" height="299" viewBox="0 0 1920 299" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect opacity="0.24" x="1920" y="299" width="1920" height="299" transform="rotate(-180 1920 299)" fill="url(#paint0_linear_78_1003)"/>
+                <defs>
+                <linearGradient id="paint0_linear_78_1003" x1="1920" y1="598" x2="2052.29" y2="67.7858" gradientUnits="userSpaceOnUse">
+                <stop offset="0.151432" stop-color="#C97B2D"/>
+                <stop offset="0.614902" stop-color="#2D372E"/>
+                </linearGradient>
+                </defs>
+            </svg>
+            <div class="gridCont">
+                {{ header|raw }}
+            </div>
+        </section>
+
+        <section class="idopontModul">
+            <div class="gridCont">
+                {{ idopont|raw }}
+                <a href="{{ '275'|alias }}" title="{{ 'ido_fog'|fordito }}">
+                    <span>{{ 'ido_fog'|fordito }}</span>
+                </a>
+            </div>
+        </section>
+
+        <section class="blogList">
+            <div class="gridCont">
+                {% for blog in blogList %}
+                    <a href="/{{ alias }}/{{ blog.getBlogAlias }}" title="{{ blog.getBlogCim }}">
+                        <picture>
+                            <source type="image/webp"
+                                    srcset="{{ twigService.cdn }}assets/uploaded_images/blog/{{ blog.getBlogKezdoKepCropped }}.webp">
+                            <source type="image/jpg"
+                                    srcset="{{ twigService.cdn }}assets/uploaded_images/blog/{{ blog.getBlogKezdoKepCropped }}">
+                            <img width="744" height="496"
+                                src="{{ twigService.cdn }}assets/uploaded_images/blog/{{ blog.getBlogKezdoKepCropped }}"
+                                title="{{ blog.getKepTitle }}" alt="{{ blog.getKepAlt }}" />
+                        </picture>
+                        <div class="text">
+                            <h2>{{ blog.getBlogCim }}</h2>
+                            <p>{{ blog.getBlogBevezeto }}</p>
+                            <svg class="gradOr" width="393" height="236" viewBox="0 0 393 236" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect opacity="0.24" width="393" height="236" fill="url(#paint0_linear_6_4261)"/>
+                                <defs>
+                                    <linearGradient id="paint0_linear_6_4261" x1="1.4545e-05" y1="236" x2="222.109" y2="5.14673" gradientUnits="userSpaceOnUse">
+                                        <stop offset="0.151432" stop-color="#C97B2D"/>
+                                        <stop offset="0.614902" stop-color="#2D372E"/>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                            <span>
+                                <strong>{{ 'tovabb_olvasom'|fordito }}</strong>
+                                <svg class="angle" width="13" height="7" viewBox="0 0 13 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M1.5 1L6.5 6L11.5 1" stroke="#C97B2D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </span>
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section class="idopontModul">
+            <div class="gridCont">
+                {{ idopont|raw }}
+                <a href="{{ '275'|alias }}" title="{{ 'ido_fog'|fordito }}">
+                    <span>{{ 'ido_fog'|fordito }}</span>
+                </a>
+            </div>
+        </section>
+    </main>
+
+{% endblock %}

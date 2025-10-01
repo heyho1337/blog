@@ -1,0 +1,21 @@
+{
+    "name": "heyhodesigns/blog",
+    "description": "symfony blog bundle by heyhodesigns",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Heyhodesigns\\Blog\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "heyhodesigns",
+            "email": "heyho1337@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "symfony/framework-bundle": "^7.0"
+    }
+}
