@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <main class="blogContainer article subContainer">
+        <section class="blogHeader subHeader">
+            <div class="gridCont">
+                <h1>{{ title }}</h1>
+            </div>
+        </section>
+
+        <section class="blogList">
+            <div class="gridCont">
+                {% for blog in blogList %}
+                    <a href="/{{ alias }}/{{ blog.getBlogAlias }}" title="{{ blog.getBlogCim }}">
+                        <picture>
+                            <source type="image/webp"
+                                    srcset="{{ twigService.cdn }}assets/uploaded_images/blog/{{ blog.getBlogKezdoKepCropped }}.webp">
+                            <source type="image/jpg"
+                                    srcset="{{ twigService.cdn }}assets/uploaded_images/blog/{{ blog.getBlogKezdoKepCropped }}">
+                            <img width="744" height="496"
+                                src="{{ twigService.cdn }}assets/uploaded_images/blog/{{ blog.getBlogKezdoKepCropped }}"
+                                title="{{ blog.getBlogKepTitle }}" alt="{{ blog.getBlogKepAlt }}" />
+                        </picture>
+                        <h2>{{ blog.getBlogCim }}</h2>
+                        <p>{{ blog.getBlogBevezeto }}</p>
+                        <div>
+                            <span>{{ 'tovabb_olvasom'|fordito }}</span>
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+
+{% endblock %}

@@ -9,7 +9,6 @@ use App\Repository\BlogRepository;
 use App\Service\Modules\CacheService;
 use App\Service\Modules\LangService;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Contracts\Cache\CacheInterface;
 
 final class BlogBySlugStateProvider implements ProviderInterface
 {
@@ -35,11 +34,7 @@ final class BlogBySlugStateProvider implements ProviderInterface
         }
 
         $alias = $context['request']->attributes->get('slug');
-
-        $slug_column = "slug_".$this->langService->getCurrentLang();
-        $blog = $this->cache->getFromCache("blog_by_slug",$alias,function() use ($alias,$slug_column) {
-            return $this->blogRepository->findOneBy([$slug_column => $alias]);
-        });
+        $blog = $this->cache->get("blog:alias:".$alias.":".$this->langService->getCurrentLang());
 
         if (!$blog) {
             throw new NotFoundHttpException('Blog not found.');

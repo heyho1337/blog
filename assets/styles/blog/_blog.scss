@@ -1,0 +1,42 @@
+.blogContainer{
+    .subHeader{
+        background: url('/assets/images/blog.jpg') center center no-repeat !important;
+        background-size: cover !important;
+    }
+    .blogList{
+        margin:-100px auto 60px auto;
+        position: relative;
+        .gridCont{
+            grid-template-columns: repeat(3,1fr);
+            grid-gap: 30px;
+            a{
+                background: $dark;
+                padding:20px;
+                border-radius: 20px;
+                display:grid;
+                grid-gap:20px;
+                picture{
+                    position: relative;
+                    overflow: hidden;
+                    border-radius: 20px;
+                }
+                h2{
+                    @include simpleFont(24px,32px,400);
+                }
+                p{
+                    @include simpleFont(18px,28px,300);
+                    display: -webkit-box;
+                    -webkit-line-clamp: 4;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                }
+                > div{
+                    @include borderedButton($lightBlue,$lightBlue);
+                    margin:0 0 0 auto;
+                    width:fit-content;
+                    height:fit-content;
+                }
+            }
+        }
+    }
+}

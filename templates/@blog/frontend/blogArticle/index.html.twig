@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <main class="article subContainer">
+        <section class="title subHeader">
+            <div class="gridCont">
+                <h1>{{ title }}</h1>
+            </div>
+        </section>
+
+        <article class="{{ fajlnev }}">
+            {{ content|raw }}
+        </article>
+    </main>
+{% endblock %}

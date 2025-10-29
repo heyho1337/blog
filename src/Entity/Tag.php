@@ -30,6 +30,8 @@ class Tag
     #[Groups(['tag:read'])]
     private ?int $id = null;
 
+    private static string $currentLang = 'en';
+
     #[Groups(['tag:read'])]
     private ?string $name = null;
 
@@ -57,19 +59,19 @@ class Tag
     #[Groups(['tag:read'])]
     private Collection $articles;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $name_hu = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $name_en = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $slug_hu = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $slug_en = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $meta_desc_hu = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -80,6 +82,12 @@ class Tag
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $title_en = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null;
+
+    #[ORM\Column]
+    private ?bool $active = null;
 
     public function __construct()
     {
@@ -96,7 +104,7 @@ class Tag
         return $this->name;
     }
 
-    public function setName(string $name): static
+    public function setName(?string $name): static
     {
         $this->name = $name;
 
@@ -108,7 +116,7 @@ class Tag
         return $this->slug;
     }
 
-    public function setSlug(string $slug): static
+    public function setSlug(?string $slug): static
     {
         $this->slug = $slug;
 
@@ -188,11 +196,6 @@ class Tag
         }
 
         return $this;
-    }
-
-    public function __toString(): string
-    {
-        return $this->name ?? '—';
     }
 
     public function getNameHu(): ?string
@@ -290,4 +293,44 @@ class Tag
 
         return $this;
     }
+
+    public static function setCurrentLang(string $lang): void
+    {
+        self::$currentLang = $lang;
+    }
+
+    public function __toString(): string
+    {
+        $getter = 'getName' . self::$currentLang;
+        if (method_exists($this, $getter)) {
+            return (string) $this->$getter();
+        }
+
+        return '';
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): static
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function isActive(): ?bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(bool $active): static
+    {
+        $this->active = $active;
+
+        return $this;
+    }
+
 }

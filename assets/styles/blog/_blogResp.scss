@@ -1,0 +1,19 @@
+@media(max-width:1200px) and (min-width:750px){
+    .blogContainer{
+        .blogList{
+            .gridCont{
+                grid-template-columns: repeat(2,1fr);
+            }
+        }
+    }
+}
+
+@media(max-width:750px){
+    .blogContainer{
+        .blogList{
+            .gridCont{
+                grid-template-columns: 1fr;
+            }
+        }
+    }
+}

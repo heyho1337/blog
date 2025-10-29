@@ -1,0 +1,5 @@
+{% extends '@EasyAdmin/crud/form_theme.html.twig' %}
+
+{% block _Category_image_widget %}
+    {% include 'admin/form/image_upload_with_preview.html.twig' with {form: form, ea: ea, path:'category'} %}
+{% endblock %}
