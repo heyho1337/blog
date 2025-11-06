@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\TagRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -20,7 +21,6 @@ use ApiPlatform\Metadata\GetCollection;
     ],
     security: "is_granted('ROLE_API')"
 )]
-
 #[ORM\Entity(repositoryClass: TagRepository::class)]
 class Tag
 {
@@ -32,17 +32,18 @@ class Tag
 
     private static string $currentLang = 'en';
 
-    #[Groups(['tag:read'])]
-    private ?string $name = null;
+    // JSON translation storage
+    #[ORM\Column(type: Types::JSON)]
+    private array $name = [];
 
-    #[Groups(['tag:read'])]
-    private ?string $slug = null;
+    #[ORM\Column(type: Types::JSON)]
+    private array $slug = [];
 
-    #[Groups(['tag:read'])]
-    private ?string $meta_desc = null;
+    #[ORM\Column(type: Types::JSON)]
+    private array $meta_desc = [];
 
-    #[Groups(['tag:read'])]
-    private ?string $title = null;
+    #[ORM\Column(type: Types::JSON)]
+    private array $title = [];
 
     #[ORM\Column]
     #[Groups(['tag:read'])]
@@ -60,30 +61,6 @@ class Tag
     private Collection $articles;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $name_hu = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $name_en = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $slug_hu = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $slug_en = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $meta_desc_hu = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $meta_desc_en = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $title_hu = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $title_en = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
 
     #[ORM\Column]
@@ -92,6 +69,10 @@ class Tag
     public function __construct()
     {
         $this->articles = new ArrayCollection();
+        $this->name = [];
+        $this->slug = [];
+        $this->meta_desc = [];
+        $this->title = [];
     }
 
     public function getId(): ?int
@@ -99,51 +80,107 @@ class Tag
         return $this->id;
     }
 
-    public function getName(): ?string
+    // ✅ Smart getter/setter for name
+    #[Groups(['tag:read'])]
+    public function getName(?string $lang = null): ?string
+    {
+        $lang = $lang ?? self::$currentLang;
+        return $this->name[$lang] ?? $this->name['en'] ?? null;
+    }
+
+    public function setName(?string $value, ?string $lang = null): static
+    {
+        $lang = $lang ?? self::$currentLang;
+        $this->name[$lang] = $value;
+        return $this;
+    }
+
+    public function getNameTranslations(): array
     {
         return $this->name;
     }
 
-    public function setName(?string $name): static
+    public function setNameTranslations(array $name): static
     {
         $this->name = $name;
-
         return $this;
     }
 
-    public function getSlug(): ?string
+    // ✅ Smart getter/setter for slug
+    #[Groups(['tag:read'])]
+    public function getSlug(?string $lang = null): ?string
+    {
+        $lang = $lang ?? self::$currentLang;
+        return $this->slug[$lang] ?? $this->slug['en'] ?? null;
+    }
+
+    public function setSlug(?string $value, ?string $lang = null): static
+    {
+        $lang = $lang ?? self::$currentLang;
+        $this->slug[$lang] = $value;
+        return $this;
+    }
+
+    public function getSlugTranslations(): array
     {
         return $this->slug;
     }
 
-    public function setSlug(?string $slug): static
+    public function setSlugTranslations(array $slug): static
     {
         $this->slug = $slug;
-
         return $this;
     }
 
-    public function getMetaDesc(): ?string
+    // ✅ Smart getter/setter for meta_desc
+    #[Groups(['tag:read'])]
+    public function getMetaDesc(?string $lang = null): ?string
+    {
+        $lang = $lang ?? self::$currentLang;
+        return $this->meta_desc[$lang] ?? $this->meta_desc['en'] ?? null;
+    }
+
+    public function setMetaDesc(?string $value, ?string $lang = null): static
+    {
+        $lang = $lang ?? self::$currentLang;
+        $this->meta_desc[$lang] = $value;
+        return $this;
+    }
+
+    public function getMetaDescTranslations(): array
     {
         return $this->meta_desc;
     }
 
-    public function setMetaDesc(?string $meta_desc): static
+    public function setMetaDescTranslations(array $meta_desc): static
     {
         $this->meta_desc = $meta_desc;
-
         return $this;
     }
 
-    public function getTitle(): ?string
+    // ✅ Smart getter/setter for title
+    #[Groups(['tag:read'])]
+    public function getTitle(?string $lang = null): ?string
+    {
+        $lang = $lang ?? self::$currentLang;
+        return $this->title[$lang] ?? $this->title['en'] ?? null;
+    }
+
+    public function setTitle(?string $value, ?string $lang = null): static
+    {
+        $lang = $lang ?? self::$currentLang;
+        $this->title[$lang] = $value;
+        return $this;
+    }
+
+    public function getTitleTranslations(): array
     {
         return $this->title;
     }
 
-    public function setTitle(?string $title): static
+    public function setTitleTranslations(array $title): static
     {
         $this->title = $title;
-
         return $this;
     }
 
@@ -155,7 +192,6 @@ class Tag
     public function setCreatedAt(\DateTimeImmutable $created_at): static
     {
         $this->created_at = $created_at;
-
         return $this;
     }
 
@@ -167,7 +203,6 @@ class Tag
     public function setModifiedAt(\DateTimeImmutable $modified_at): static
     {
         $this->modified_at = $modified_at;
-
         return $this;
     }
 
@@ -198,117 +233,6 @@ class Tag
         return $this;
     }
 
-    public function getNameHu(): ?string
-    {
-        return $this->name_hu;
-    }
-
-    public function setNameHu(string $name_hu): static
-    {
-        $this->name_hu = $name_hu;
-
-        return $this;
-    }
-
-    public function getNameEn(): ?string
-    {
-        return $this->name_en;
-    }
-
-    public function setNameEn(?string $name_en): static
-    {
-        $this->name_en = $name_en;
-
-        return $this;
-    }
-
-    public function getSlugHu(): ?string
-    {
-        return $this->slug_hu;
-    }
-
-    public function setSlugHu(string $slug_hu): static
-    {
-        $this->slug_hu = $slug_hu;
-
-        return $this;
-    }
-
-    public function getSlugEn(): ?string
-    {
-        return $this->slug_en;
-    }
-
-    public function setSlugEn(?string $slug_en): static
-    {
-        $this->slug_en = $slug_en;
-
-        return $this;
-    }
-
-    public function getMetaDescHu(): ?string
-    {
-        return $this->meta_desc_hu;
-    }
-
-    public function setMetaDescHu(string $meta_desc_hu): static
-    {
-        $this->meta_desc_hu = $meta_desc_hu;
-
-        return $this;
-    }
-
-    public function getMetaDescEn(): ?string
-    {
-        return $this->meta_desc_en;
-    }
-
-    public function setMetaDescEn(?string $meta_desc_en): static
-    {
-        $this->meta_desc_en = $meta_desc_en;
-
-        return $this;
-    }
-
-    public function getTitleHu(): ?string
-    {
-        return $this->title_hu;
-    }
-
-    public function setTitleHu(string $title_hu): static
-    {
-        $this->title_hu = $title_hu;
-
-        return $this;
-    }
-
-    public function getTitleEn(): ?string
-    {
-        return $this->title_en;
-    }
-
-    public function setTitleEn(?string $title_en): static
-    {
-        $this->title_en = $title_en;
-
-        return $this;
-    }
-
-    public static function setCurrentLang(string $lang): void
-    {
-        self::$currentLang = $lang;
-    }
-
-    public function __toString(): string
-    {
-        $getter = 'getName' . self::$currentLang;
-        if (method_exists($this, $getter)) {
-            return (string) $this->$getter();
-        }
-
-        return '';
-    }
-
     public function getImage(): ?string
     {
         return $this->image;
@@ -317,7 +241,6 @@ class Tag
     public function setImage(?string $image): static
     {
         $this->image = $image;
-
         return $this;
     }
 
@@ -329,8 +252,21 @@ class Tag
     public function setActive(bool $active): static
     {
         $this->active = $active;
-
         return $this;
     }
 
+    public static function setCurrentLang(string $lang): void
+    {
+        self::$currentLang = $lang;
+    }
+
+    public static function getCurrentLang(): string
+    {
+        return self::$currentLang;
+    }
+
+    public function __toString(): string
+    {
+        return $this->getName() ?? '';
+    }
 }
